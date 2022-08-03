@@ -1,8 +1,64 @@
-﻿@{
+﻿@model BlogCore.Models.ViewModels.HomeVM
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Bienvenidos al curso ASP .NET core</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!--SLIDER-->
+
+<header>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            @{ int cont = 0; }
+            @foreach (var item in Model.Slider)
+            {
+                var itemDinamico = cont++ == 0 ? "item active" : "item";
+                <div class="carousel-item @itemDinamico">
+                    <img src="@Url.Content(item.UrlImagen)" width="100%"/>
+                    <h1 class="text-dark text-center">@Html.Raw(item.Nombre)</h1>
+                </div>
+            }
+        </div>
+
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </a>
+    </div> 
+</header>
+
+<!--Cierra SLIDER-->
+
+<div class="row fondoTitulo mt-5">
+    <div class="col-sm-12 py-5">
+        <h1 class="text-center text-white"> Ultimos Cursos y Tutoriales</h1>
+    </div>
 </div>
+
+<!--Articulos-->
+@if (Model.Articulo.Count() > 0)
+{
+    <hr/>
+    <div class="row">
+        @foreach (var articulo in Model.Articulo.OrderBy(o => o.Id))
+        {
+        <div class="col-4">
+            <div class="card">
+                <img src="@articulo.UrlImagen" class="img-thumbnail" width="100%"/>
+                <div class="card-body">
+                    <h5 class="text-center">@articulo.Nombre</h5>
+                    <p>@articulo.FechaCreacion</p>
+                    <a asp-action="Details" class="btn btn-success" style="border-radius:2px" asp-route-id="@articulo.Id">Mas información</a>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+}
+else
+{
+    <p>No existen articulos</p>
+}

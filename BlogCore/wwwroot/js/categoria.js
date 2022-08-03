@@ -5,7 +5,7 @@ $(document).ready(() => {
 });
 
 const cargarDatatable = () => {
-    dataTable : $(tblCategorias).DataTable({
+    dataTable = $(tblCategorias).DataTable({
         "ajax": {
             "url": "/admin/categorias/GetAll",
             "type": "GET",
@@ -39,7 +39,6 @@ const cargarDatatable = () => {
 }
 
 function Delete(url) {
-    console.log(url);
     swal({
         title: "Esta seguro de borrar?",
         text: "Este contenido no se puede recuperar!",
